@@ -1,0 +1,317 @@
+:root {
+    --header-color: #5b10d3;
+    --main-bg-light: #faf9f8;
+    --second-bg-light: #ffffff;
+    --main-bg-dark: #141414;
+    --second-bg-dark: #252525;
+    --main-bg-light-line: #c4c4c4;
+    --main-bg-dark-line: #444444;
+    --main-bg-dark-line2: #3b3b3b;
+    --main-bg-text-light: #ffffff;
+    --main-bg-text-dark:rgb(0, 0, 0);
+    --main-bg: var(--main-bg-light);
+    --second-bg: var(--second-bg-light);
+    --main-bg-line: var(--main-bg-light-line);
+    --main-bg-text: var(--main-bg-text-dark);
+    --main-bg-tumbler: var(--second-bg-light);
+    --main-bg-tumblerborder: var(--main-bg-dark-line);
+    --main-bg-holderss: var(--second-bg-light);
+    --main-bg-color2: var(--second-bg-light);
+    --elements: var(--second-bg-light);
+    --color1: #4408a5;
+    --color2: #cc3b3b; 
+    --color3: #971818; 
+    --color4: #ffffff;
+    --color5: #444444;
+}
+
+
+
+body {
+    background-color: var(--main-bg) !important;
+    margin: 0;
+}
+
+.header-container {
+    background-color: var(--header-color);
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 2; 
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+}
+
+.add-btn {
+    background-color: var(--header-color);
+    color: var(--color4) !important;
+    border: 2px solid var(--color4);
+    padding: 5px 10px;
+    margin-left: 20px;
+    transition: background-color 0.5s ease, color 0.5s ease, border 0.5s ease; 
+}
+
+.add-btn:hover {
+    background-color: var(--color4);
+    color: var(--header-color) !important;
+    border: 2px solid var(--header-colort);
+}
+
+.confirm-btn {
+    background-color: var(--header-color);
+    color: var(--color4) !important;
+    margin-left: 5px !important;
+}
+
+.red-btn {
+    background-color: var(--color2);
+    color: var(--color4) !important;
+}
+
+
+.confirm-btn:hover {
+    background-color: var(--color1);
+    color: var(--color4) !important;
+    margin-left: 5px;
+}
+
+.red-btn:hover {
+    background-color: var(--color3);
+    color: var(--color4) !important;
+}
+
+.container-fluid {
+    padding-top: 20px;
+}
+
+.vertical-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 13.1vw;
+    height: 100vh;
+    background-color: var(--second-bg);
+    z-index: -2; 
+}
+
+.vertical-line {
+    position: fixed;
+    left: 13.1vw; 
+    top: 0;
+    width: 1px;
+    height: 100vh;
+    background-color: var(--main-bg-line); 
+    z-index: 1; 
+}
+
+.search-container {
+    position: relative;
+    width: 12vw;
+    margin: 0;
+    z-index: 2; 
+}
+
+.search-container input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.search-container .clear-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: none;
+}
+
+.task-list-item {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    text-align: left;
+    border: none;
+    width: 100%;
+    position: relative;
+    background-color: var(--main-bg-holderss) !important;
+    color: var(--main-bg-color2) !important;
+
+}
+
+.task-list-item:hover {
+    background-color: #f5f5f5;
+}
+
+.task-list-item:focus {
+    outline: none;
+    background-color: var(--main-bg-holderss) !important;
+    color: var(--main-bg-color2) !important;    
+}
+
+.task-list-item[data-expanded="false"] {
+    overflow: hidden;
+    height: 40px;
+    transition: height 0.3s ease;
+    background-color: var(--main-bg-holderss) !important;
+    color: var(--main-bg-color2) !important;
+}
+
+.task-list-item .form-control {
+    width: calc(100% - 70px);
+    background-color: var(--elements) !important;
+
+}
+
+.task-list-item .cancel-task-btn {
+    margin-left: 10px;
+    
+}
+
+.task-list-item i {
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-list-item:hover i {
+    opacity: 1;
+}
+
+.task-list-item .bi-exclamation-triangle-fill,
+.task-list-item .bi-check2-circle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.task-list-item .bi-exclamation-triangle-fill{
+    margin-right: 30px;
+}
+
+.task-list-item[data-expanded="true"] .bi-exclamation-triangle-fill,
+.task-list-item[data-expanded="true"] .bi-circle {
+    top: 20px;
+}
+
+.task-list-item .bi-exclamation-triangle-fill:hover,
+.task-list-item .bi-circle:hover {
+    color: #999;
+}
+
+.task-list-item .bi-exclamation-triangle-fill-fill {
+    color: red;
+}
+
+.task-list-item .bi-check-lg {
+    display: none;
+}
+
+.task-list-item .bi-circle:hover + .bi-check-lg {
+    display: inline;
+}
+
+.form-check-label {
+    justify-content: flex-start; 
+}
+
+
+.form-check-input {
+    margin-left: 5px;
+}
+
+.task-form-container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: var(--second-bg);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: auto;
+    grid-column: span 2;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.task-list-item i {
+    opacity: 1;
+}
+
+.task-input {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 12px;
+    border: 1px solid var(--main-bg-line);
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.task-input:focus {
+    border-color: var(--header-color);
+    outline: none;
+}
+
+.d-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.confirm-btn,
+.red-btn {
+    width: 100px;
+    margin: 0;
+}
+
+.horizontal-line1, .horizontal-line2 {
+    background-color: var(--main-bg-dark-line);
+    width: 12vw;
+    padding-top: 1px;
+}
+
+.horizontal-line1 {
+    margin-top: -20px;
+}
+
+.horizontal-line2 {
+    margin-top: -20px;
+
+}
+
+.side {
+    color: var(--main-bg-text);
+}
+
+.tumbler {
+    background-color: var(--main-bg-tumbler) !important;
+    border: 1px solid var(--main-bg-tumblerborder) !important;
+    border-radius: 8px !important;
+}
+
+.text-holderss {
+    background-color: var(--main-bg-holderss) !important;
+}
+
+.text-holderss {
+    color: var(--main-bg-text); 
+}
+
+.bi-exclamation-triangle-fill-half:hover {
+    color: #ffb0b0 !important; 
+}
+
