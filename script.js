@@ -7,19 +7,23 @@ document.addEventListener('DOMContentLoaded', function() {
         if (taskForm.style.display === 'block') {
             taskForm.style.display = 'none';
         } else {
-            taskForm.style.display = 'block'; 
-            document.getElementById('taskInput').focus(); 
+            taskForm.style.display = 'block';
+            document.getElementById('taskInput').focus();
         }
     });
+
+    
 
     // Обработчик событий для добавления новой задачи
     document.getElementById('confirmTaskBtn').addEventListener('click', function() {
         var taskText = document.getElementById('taskInput').value.trim();
+        var taskDescription = document.getElementById('taskDescriptionInput').value.trim();
         if (isValidTask(taskText)) {
-            addTask(taskText);
-            saveTasks(); 
+            addTask(taskText, taskDescription);
+            saveTasks();
             document.getElementById('taskForm').style.display = 'none';
             document.getElementById('taskInput').value = '';
+            document.getElementById('taskDescriptionInput').value = '';
         }
     });
 
@@ -46,6 +50,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function(event) {
         var taskItem = event.target.closest('.task-list-item');
         if (taskItem) {
+            var allTaskItems = document.querySelectorAll('.task-list-item');
+            allTaskItems.forEach(function(item) {
+                if (item !== taskItem) {
+                    item.setAttribute('data-expanded', 'false');
+                }
+            });
+
             var isExpanded = taskItem.getAttribute('data-expanded') === 'true';
             taskItem.setAttribute('data-expanded', isExpanded ? 'false' : 'true');
         }
@@ -64,10 +75,74 @@ document.addEventListener('DOMContentLoaded', function() {
         return true;
     }
 
+    // Функция для добавления новой задачи
+    function addTask(taskText, taskDescription) {
+        var taskList = document.getElementById('taskList');
+        var taskItem = document.createElement('div'); // Создаем внешний контейнер
+        taskItem.classList.add('task-list-item');
+        taskItem.setAttribute('data-expanded', 'false'); // Изначально свернутая задача
+
+        // Создаем элемент для названия задачи
+        var title = document.createElement('h6');
+        title.classList.add('task-title');
+        title.textContent = taskText;
+
+        // Создаем иконку для выполнения задачи
+        var checkIcon = document.createElement('i');
+        checkIcon.classList.add('bi', 'bi-check2-circle');
+        checkIcon.setAttribute('aria-hidden', 'true');
+
+        // Создаем иконку для срочной задачи
+        var urgentIcon = document.createElement('i');
+        urgentIcon.classList.add('bi', 'bi-exclamation-triangle-fill');
+        urgentIcon.setAttribute('aria-hidden', 'true');
+
+        // Добавляем иконки в заголовок
+        title.appendChild(checkIcon);
+        title.appendChild(urgentIcon);
+
+        // Добавляем заголовок в элемент задачи
+        taskItem.appendChild(title);
+
+        // Создаем элемент для описания задачи
+        var descriptionPara = document.createElement('p');
+        descriptionPara.classList.add('task-description');
+        descriptionPara.textContent = taskDescription;
+        taskItem.appendChild(descriptionPara);
+
+        // Создаем кнопку удаления
+        var deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Удалить';
+        deleteButton.classList.add('delete-task-btn');
+        taskItem.appendChild(deleteButton);
+
+        taskList.appendChild(taskItem);
+    }
+
+    // Функция для сохранения задач в локальном хранилище
+    function saveTasks() {
+        var taskItems = document.querySelectorAll('.task-list-item');
+        var tasks = [];
+        taskItems.forEach(function(taskItem) {
+            var taskText = taskItem.querySelector('.task-title').textContent.trim();
+            var taskDescription = taskItem.querySelector('.task-description').textContent.trim();
+            tasks.push({ text: taskText, description: taskDescription });
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Функция для загрузки задач из локального хранилища
+    function loadTasks() {
+        var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(function(task) {
+            addTask(task.text, task.description);
+        });
+    }
+
     // Функция для перемещения задачи в раздел выполненных задач
     function moveToCompletedTasks(taskItem) {
         var completedTasksList = document.getElementById('completedTasksList');
-        var clonedTaskItem = taskItem.cloneNode(true); 
+        var clonedTaskItem = taskItem.cloneNode(true);
 
         taskItem.remove();
 
@@ -77,62 +152,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Функция для переключения статуса выполнения задачи
     function toggleCompleted(circleBtn) {
-        circleBtn.classList.toggle('bi-check2-circle'); 
+        circleBtn.classList.toggle('bi-check2-circle');
         var taskItem = circleBtn.closest('.task-list-item');
         moveToCompletedTasks(taskItem);
     }
 
-    // Функция для добавления новой задачи
-    function addTask(taskText) {
-        var taskList = document.getElementById('taskList');
-        var button = document.createElement('button');
-        button.textContent = taskText;
-        button.classList.add('task-list-item');
-        button.setAttribute('data-expanded', 'false');
-        button.setAttribute('id', 'task-' + Date.now());
-
-        var starBtn = document.createElement('i');
-        starBtn.classList.add('bi', 'bi-exclamation-triangle-fill');
-        button.appendChild(starBtn);
-
-        var circleBtn = document.createElement('i');
-        circleBtn.classList.add('bi', 'bi-check2-circle');
-        button.appendChild(circleBtn);
-
-        var datePicker = document.createElement('input');
-        datePicker.setAttribute('type', 'date');
-        datePicker.classList.add('task-date-picker');
-        datePicker.style.display = 'block'; // отображение по умолчанию в развернутом состоянии
-        button.appendChild(datePicker);
-
-        var deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Удалить';
-        deleteBtn.classList.add('delete-task-btn', 'btn', 'btn-danger');
-        deleteBtn.style.display = 'block'; // отображение по умолчанию в развернутом состоянии
-        button.appendChild(deleteBtn);
-
-        taskList.appendChild(button);
-    }
-
-    // Функция для сохранения задач в локальном хранилище
-    function saveTasks() {
-        var taskItems = document.querySelectorAll('.task-list-item');
-        var tasks = [];
-        taskItems.forEach(function(taskItem) {
-            tasks.push(taskItem.textContent.trim());
-        });
-        localStorage.setItem('tasks', JSON.stringify(tasks));
-    }
-
-    // Функция для загрузки задач из локального хранилища
-    function loadTasks() {
-        var tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        tasks.forEach(function(taskText) {
-            addTask(taskText);
-        });
-    }
-
-    // Обработчик событий для переключения звездочки задачи
+    // Обработчик событий для переключения звездочки задачи и выполнения задачи
     document.addEventListener('click', function(event) {
         var starBtn = event.target.closest('.bi-exclamation-triangle-fill');
         var circleBtn = event.target.closest('.bi-check2-circle');
@@ -166,8 +191,8 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('confirmDeleteTaskBtn').addEventListener('click', function() {
                 var taskItem = deleteTaskBtn.closest('.task-list-item');
                 taskItem.remove();
-                modal.hide(); 
-                saveTasks(); 
+                modal.hide();
+                saveTasks();
             });
         }
     });

@@ -46,17 +46,42 @@
                     <span class="clear-icon" id="clearInput">&#10006;</span>
                 </div>
                 <div class="mt-3">
-                    
-                    <div class="col-12"><a href="urgent_tasks.html" class="btn side">Срочные задачи</a></div>
-                    <div class="col-12"><a href="completed_tasks.html" class="btn side">Выполненные задачи</a></div>
-                    <div class="dark-mode-cont side d-flex">
-                        <div class="col-8"><label class="form-check-label" style="padding-left: 13px; padding-top: 20px;" for="darkModeToggle">Тёмный режим</label>
+                    <div class="row d-flex">
+                        <div class="dark-mode-cont side">
+                            <div class="darkk d-flex">
+                                <div class="col d-flex">
+                                    <label class="form-check-label" style="padding-left: 13px; padding-top: 20px;" for="darkModeToggle">Тёмный режим</label>
+                                    <div style="padding-top: 25px; margin-right: 40px;" class="form-check form-switch">
+                                        <input class="form-check-input tumbler" type="checkbox" id="darkModeToggle">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col">
+                                <div class="d-flex flex-column">
+                                    <button id="completedTasksLink" class="btn btn_side" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" style="margin-left: 13px;">
+                                        <div class="d-flex align-items-center">
+                                            <p class="mb-0">Выполненные задачи</p>
+                                            <i class="bi bi-chevron-down"></i>
+                                        </div>
+                                    </button>
+                                    <div class="collapse" id="collapseExample">
+                                        <div class="card card-body">
+                                            <ul class="completed-tasks-list" id="completedTasksList">
+                                                <!-- Сюда будут добавляться выполненные задачи -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="completed-tasks-sidebar">
+                                        <div class="completed-tasks-header" id="completedTasksHeader">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
                         </div>
-                        <div class="col-4"><div style="padding-top: 20px;" class="form-check form-switch ms-auto">
-                            <input class="form-check-input tumbler" type="checkbox" id="darkModeToggle">
-                        </div>  
                     </div>
-                </div>
+                    
+                                                           
                 </div>
                 <div class="vertical-container"></div>
                 <div class="vertical-line"></div>
@@ -67,6 +92,7 @@
             <div class="col-2">
                 <div id="taskForm" class="task-form-container" style="display: none;">
                     <input type="text" id="taskInput" class="task-input text-holderss" placeholder="Введите задачу...">
+                    <input type="text" id="taskDescriptionInput" class="task-input text-holderss" placeholder="Введите описание задачи...">
                     <div class="d-flex">
                         <button class="btn red-btn" id="cancelTaskBtn">Отмена</button>
                         <button class="btn confirm-btn flex-grow-1" id="confirmTaskBtn">Подтвердить</button>

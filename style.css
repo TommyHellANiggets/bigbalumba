@@ -109,11 +109,19 @@ body {
     z-index: 1; 
 }
 
+
+
 .search-container {
     position: relative;
     width: 12vw;
     margin: 0;
     z-index: 2; 
+}
+
+.btn_side {
+    color: var(--main-bg-text) !important;
+    float: left !important; 
+
 }
 
 .search-container input[type="text"] {
@@ -123,6 +131,16 @@ body {
     border: 1px solid #ccc;
 }
 
+.task-description {
+    margin: 0;
+    font-size: 14px;
+    color: #777;
+    max-width: 128px; /* Ограничение ширины описания задачи */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Обрезание текста, если он не помещается */
+    white-space: nowrap; /* Предотвращение переноса текста на новую строку */
+}
+
 .search-container .clear-icon {
     position: absolute;
     top: 50%;
@@ -130,6 +148,14 @@ body {
     transform: translateY(-50%);
     cursor: pointer;
     display: none;
+}
+
+.task-info {
+    padding-bottom: 10px;
+}
+
+.task-title {
+    margin: 0;
 }
 
 .task-list-item {
@@ -144,7 +170,9 @@ body {
     width: 100%;
     position: relative;
     background-color: var(--main-bg-holderss) !important;
-    color: var(--main-bg-color2) !important;
+    color: var(--main-bg-text) !important;
+    min-height: 60px; /* Установим минимальную высоту плашки задачи */ 
+    overflow-y: auto; 
 
 }
 
@@ -155,7 +183,7 @@ body {
 .task-list-item:focus {
     outline: none;
     background-color: var(--main-bg-holderss) !important;
-    color: var(--main-bg-color2) !important;    
+    color: var(--main-bg-text) !important;    
 }
 
 .task-list-item[data-expanded="false"] {
@@ -163,7 +191,7 @@ body {
     height: 40px;
     transition: height 0.3s ease;
     background-color: var(--main-bg-holderss) !important;
-    color: var(--main-bg-color2) !important;
+    color: var(--main-bg-text) !important;
 }
 
 .task-list-item .form-control {
@@ -206,8 +234,8 @@ body {
 }
 
 .task-list-item[data-expanded="true"] .bi-exclamation-triangle-fill,
-.task-list-item[data-expanded="true"] .bi-circle {
-    top: 20px;
+.task-list-item[data-expanded="true"] .bi-check2-circle {
+    top: 30px;
 }
 
 .task-list-item .bi-exclamation-triangle-fill:hover,
@@ -233,7 +261,7 @@ body {
 
 
 .form-check-input {
-    margin-left: 5px;
+    margin-left: -50px !important;
 }
 
 .task-form-container {
@@ -315,3 +343,17 @@ body {
     color: #ffb0b0 !important; 
 }
 
+.delete-task-btn {
+    margin-top: 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    float: right; 
+}
+
+.delete-task-btn:hover {
+    background-color: darkred;
+}
